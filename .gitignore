@@ -4,6 +4,15 @@
 ./deps/jsoncpp
 ./deps/benchmark
 .vscode
+# Visual Studio 相关
+.vs/
+x64/
+
+# 项目文件
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
 !.vscode/tasks.json
 !.vscode/launch.json
 .VSCodeCounter/*
@@ -30,4 +39,6 @@ docs/book
 *.cap
 *.pcapng
 mock_client
+.sln
+.vcxproj
 #*#

@@ -6,11 +6,19 @@
 #include<mutex>
 #include<queue>
 #include<thread>
+#include<memory>
+#include<functional>
+#include<condition_variable>
 class ConnectionPool
 {
 public:
+	//获取连接池实列
 	static ConnectionPool* getConnectionPool();
+	//初始化连接池
 	void init(const ConfigMgr& config);
+	//外部接口，获取空闲连接
+	//生产者线程
+	void produceTask();
 	ConnectionPool(const ConnectionPool&) = delete;
 	ConnectionPool operator=(const ConnectionPool&) = delete;
 	ConnectionPool(ConnectionPool&&) = delete;
@@ -30,5 +38,6 @@ private:
 	atomic_int connectionCount_;
 	std::queue<std::shared_ptr<mysql_connection>> connectionQue_;//连接队列
 	mutex queueMutex_;
+	condition_variable cv; //条件变量
 };
 
