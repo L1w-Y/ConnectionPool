@@ -8,7 +8,7 @@ class ConfigMgr
 {
 public:
     std::string ip;
-    int port;
+    unsigned short port;
     std::string dbname;
     std::string username;
     std::string password;

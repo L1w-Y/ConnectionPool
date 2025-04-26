@@ -33,7 +33,7 @@ bool mysql_connection::update(const std::string& sql)
 {       
     if (!conn_) return false;
     if (mysql_query(conn_, sql.c_str())) {
-        std::cerr << "¸üÐÂÊ§°Ü: " << mysql_error(conn_) << std::endl;
+        std::cerr << "¸üÐÂÊ§°Ü: \n" << mysql_error(conn_);
         return false;
     }
     return true;
@@ -43,8 +43,18 @@ std::unique_ptr<MYSQL_RES, decltype(&mysql_free_result)> mysql_connection::query
 {
     if (!conn_) return { nullptr, mysql_free_result };
     if (mysql_query(conn_, sql.c_str())) {
-        std::cerr << "²éÑ¯Ê§°Ü: " << mysql_error(conn_) << std::endl;
+        std::cerr << "²éÑ¯Ê§°Ü: \n" << mysql_error(conn_);
         return { nullptr, mysql_free_result };
     }
     return { mysql_use_result(conn_), mysql_free_result };
+}
+
+void mysql_connection::refreshAliveTime()
+{
+    alivetime_ = clock();
+}
+
+clock_t mysql_connection::getAliveTime()const
+{
+    return clock() - alivetime_;
 }
